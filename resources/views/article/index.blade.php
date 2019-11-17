@@ -1,27 +1,21 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends("layout")
+@section('content')
+<div class="row">
+    <h1 class="col s12">List of articles</h1>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Home</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-</head>
-
-<body>
-    <div>
-        <h1>List of articles</h1>
-
+    <div class="col s8">
         @foreach($articles as $article)
-        <h2><a href="/articles/{{$article->id}}">{{$article->title}}</a></h2>
-        <p>
-            {{$article->except}}</p>
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">{{$article->title}}</span>
+                <p>{{$article->except}}</p>
+            </div>
+            <div class="card-action">
+                <a href="/articles/{{$article->id}}">View Detail</a>
+                <a href="#">Edit</a>
+            </div>
+        </div>
         @endforeach
     </div>
-</body>
-
-</html>
+</div>
+@endsection

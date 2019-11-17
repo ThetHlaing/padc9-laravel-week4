@@ -14,11 +14,14 @@
 
 <body>
     <div>
-        <h1>{{$article->title}}</h1>
+        <h1>{{$article->title}}</h1> 
+        <p> Written by : {{$article->author->name}}<br/>
         <a href="/articles/{{$article->id}}/edit">Edit</a>
 
         <p>{{$article->content}}</p>
-
+        @foreach($article->tags as $tag)
+            <a href="/articles?tag={{$tag->name}}">{{$tag->name}}</a> | 
+        @endforeach
     </div>
 </body>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Tag;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,16 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::take(3)->latest()->get();
+        if (request('tag')) {
+            $articles = Tag::where(
+                'name',
+                request('tag')
+            )
+                ->firstOrFail()
+                ->articles;
+        } else {
+            $articles = Article::take(3)->latest()->get();
+        }
         return view('article.index', compact('articles'));
     }
 
@@ -37,9 +47,8 @@ class ArticleController extends Controller
      */
     public function store(ArticleRequest $request)
     {
-        
-       Article::create($request->validated());
-       
+
+        Article::create($request->validated());
     }
 
     /**
