@@ -16,11 +16,11 @@
     <div>
         <h1>{{$article->title}}</h1> 
         <p> Written by : {{$article->author->name}}<br/>
-        <a href="/articles/{{$article->id}}/edit">Edit</a>
+        <a href="{{route('articles.edit',['article'=>$article->id])}}">Edit</a>
 
         <p>{{$article->content}}</p>
         @foreach($article->tags as $tag)
-            <a href="/articles?tag={{$tag->name}}">{{$tag->name}}</a> | 
+            <a href="{{route('articles.index',['tag'=>$tag->name])}}">{{$tag->name}}</a> | 
         @endforeach
     </div>
 </body>

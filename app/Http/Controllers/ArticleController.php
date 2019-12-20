@@ -36,7 +36,8 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('article.create');
+        $tags = Tag::pluck('name', 'id');
+        return view('article.create', compact('tags'));
     }
 
     /**
@@ -47,8 +48,24 @@ class ArticleController extends Controller
      */
     public function store(ArticleRequest $request)
     {
+        //dd($request->tags);
 
-        Article::create($request->validated());
+        // $article_array = $request->validated();
+        // $article_array['user_id'] = 1;
+        // //  dd($article_array);
+        // Article::create($article_array);
+        $article = new Article(request(['title', 'content', 'except']));
+        //$article->user_id = \Auth::user()->id;
+        $article->user_id = auth()->user()->id;
+        $article->save();
+
+        if ($request->has('tags')) {
+            $article->tags()->attach($request->tags);
+        }
+
+        
+
+        return redirect()->route('articles.show', $article->id);
     }
 
     /**

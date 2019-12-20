@@ -22,4 +22,11 @@ Route::get('/', function () {
 Route::resource(
     'articles',
     'ArticleController'
-);
+)->middleware('auth');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')
+    ->name('home')
+    ->middleware('auth');

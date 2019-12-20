@@ -29,10 +29,19 @@
         @endif
 
         <form method="POST" action="/articles/">
-            @csrf            
+            @csrf
             Title : <input type="text" @error("title") class="error" @enderror name="title" value="{{ old('title') }}" /><br />
             Except : <input type="text" @error("except") class="error" @enderror name="except" value="{{ old('except') }}" /><br />
-            Content : <input type=" text"@error("content") class="error" @enderror  name="content" value="{{ old('content') }}" /><br />
+            Content : <input type=" text" @error("content") class="error" @enderror name="content" value="{{ old('content') }}" /><br />
+            Tags :
+            @foreach($tags as $index=>$tag)
+            <label>
+                <input type="checkbox" value="{{$index}}" name="tags[]" @if(is_array(old('tags')) && in_array($index,old('tags'))) checked @endif>
+                {{$tag}}
+                </input>
+            </label>
+            @endforeach
+            <br />
             <button type="submit">Create</button>
         </form>
 
